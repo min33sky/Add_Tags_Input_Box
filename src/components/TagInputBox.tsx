@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import tagIcon from '../assets/tag.svg';
+import closeIcon from '../assets/close.svg';
 
 interface Props {
   maxTags: number;
@@ -50,15 +51,15 @@ export default function TagInputBox({ maxTags }: Props) {
           <span className="mr-2 font-semibold text-violet-600">Tip!</span>
           콤마를 이용해 여러개의 태그를 추가할 수 있습니다.
         </p>
-        <ul className="flex flex-wrap rounded-md border-2 border-slate-300 p-2">
+        <ul className="flex flex-wrap gap-2 rounded-md border-2 border-slate-300 p-2">
           {tags.map((tag, idx) => (
             <li
               key={idx}
-              className="mr-2 mb-2 flex items-center justify-between rounded-md bg-slate-200 px-2 py-1"
+              className="relative space-x-1 rounded-md bg-slate-200 py-1 pl-2 pr-5"
             >
-              <span className="text-sm">{tag}</span>
-              <button className="h-4 w-4 text-slate-500 hover:text-slate-700 focus:outline-none">
-                X
+              <span className="inline-block align-text-top text-sm">{tag}</span>
+              <button className="absolute right-1 top-1/2 -translate-y-1/2">
+                <img src={closeIcon} className="h-3 w-3" alt="close btn" />
               </button>
             </li>
           ))}
