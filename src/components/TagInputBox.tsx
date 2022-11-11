@@ -7,13 +7,6 @@ interface Props {
 }
 
 export default function TagInputBox({ maxTags }: Props) {
-  /**
-   * TODO
-   * 1. 태그들을 관리할 상태를 만들고 태그를 입력 받는다.
-   * 2. 추가된 태그들을 보여준다. (중복 제외, 개수 제한)
-   * 3. 태그별 삭제 로직, 모두 삭제 로직
-   */
-
   const [tags, setTags] = useState<string[]>([]);
 
   /**
@@ -37,7 +30,13 @@ export default function TagInputBox({ maxTags }: Props) {
     }
   };
 
-  console.log('tags', tags.length, tags.length > maxTags);
+  const handleRemoveTag = (tag: string) => {
+    setTags((prev) => prev.filter((t) => t !== tag));
+  };
+
+  const handleRemoveAllTags = () => {
+    setTags([]);
+  };
 
   return (
     <div className="w-11/12 max-w-md space-y-6 rounded-lg bg-slate-100 px-6 py-10 shadow-lg selection:bg-violet-500 selection:text-slate-100">
@@ -58,11 +57,15 @@ export default function TagInputBox({ maxTags }: Props) {
               className="relative space-x-1 rounded-md bg-slate-200 py-1 pl-2 pr-5"
             >
               <span className="inline-block align-text-top text-sm">{tag}</span>
-              <button className="absolute right-1 top-1/2 -translate-y-1/2">
+              <button
+                onClick={() => handleRemoveTag(tag)}
+                className="absolute right-1 top-1/2 -translate-y-1/2"
+              >
                 <img src={closeIcon} className="h-3 w-3" alt="close btn" />
               </button>
             </li>
           ))}
+
           <input
             disabled={tags.length >= maxTags}
             type="text"
@@ -80,7 +83,10 @@ export default function TagInputBox({ maxTags }: Props) {
           </span>
           개 태그를 추가할 수 있습니다.
         </p>
-        <button className="w-full rounded-md bg-violet-600 px-4 py-2 text-sm text-slate-100 transition hover:bg-violet-800 sm:w-fit">
+        <button
+          onClick={handleRemoveAllTags}
+          className="w-full rounded-md bg-violet-600 px-4 py-2 text-sm text-slate-100 transition hover:bg-violet-800 sm:w-fit"
+        >
           모두 삭제
         </button>
       </footer>
